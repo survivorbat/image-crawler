@@ -1,0 +1,5 @@
+crawl:
+  path: /
+  defaults:
+    _controller: App\Action\Crawl\Crawl
+    url: ""

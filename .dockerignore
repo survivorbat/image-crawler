@@ -1,0 +1,9 @@
+docker/
+src/var
+src/vendor
+.dockerignore
+.gitignore
+.travis.yml
+Makefile
+README.md
+docs/

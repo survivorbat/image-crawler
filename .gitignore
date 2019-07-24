@@ -1,0 +1,5 @@
+.idea/
+.vscode/
+/src/public/bundles/
+/src/var/
+/src/vendor/
