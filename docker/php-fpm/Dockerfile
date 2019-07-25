@@ -16,6 +16,8 @@ RUN addgroup -g 1000 php \
        php7-zip \
        zip \
        libzip-dev \
+       chromium \
+       php7-redis \
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-install zip
 

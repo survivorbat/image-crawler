@@ -2,6 +2,7 @@ version: '3.5'
 
 networks:
   nginx: ~
+  cache: ~
 
 services:
   php-fpm:
@@ -11,9 +12,16 @@ services:
       - 9000
     networks:
       - nginx
+      - cache
     environment:
       - APP_ENV=prod
       - APP_DEBUG=false
+  redis:
+    image: redis:5.0.5-alpine
+    networks:
+      - cache
+    expose:
+      - 6379
   nginx:
     image: nginx:1.17.2-alpine
     restart: always

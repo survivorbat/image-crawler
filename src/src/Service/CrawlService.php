@@ -2,10 +2,23 @@
 
 namespace App\Service;
 
+use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Panther\Client;
 
 class CrawlService
 {
+    /** @var AbstractAdapter $cacheAdapter */
+    protected $cacheAdapter;
+
+    /**
+     * CrawlService constructor.
+     * @param AbstractAdapter $adapter
+     */
+    public function __construct(AbstractAdapter $adapter)
+    {
+        $this->cacheAdapter = $adapter;
+    }
+
     /**
      * @param string $url
      * @return array
@@ -14,8 +27,8 @@ class CrawlService
     {
         $client = Client::createChromeClient();
 
-        $client->request('GET', $url);
+        $crawler = $client->request('GET', $url);
 
-        return [];
+        $crawler->filter('img');
     }
 }
