@@ -16,6 +16,8 @@ services:
     environment:
       - APP_ENV=prod
       - APP_DEBUG=false
+
+  # TODO: Ensure Redis is secure with username/password
   redis:
     image: redis:5.0.5-alpine
     networks:

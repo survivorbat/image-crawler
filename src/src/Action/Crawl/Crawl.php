@@ -27,16 +27,24 @@ class Crawl
     }
 
     /**
+     * TODO: Handle exception
+     *
      * @param Request $request
      * @return Response
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function __invoke(Request $request): Response
     {
         $url = $request->query->get('url');
 
+        if (empty($url)) {
+            $response = $this->renderEngine->render('crawl/crawl.html.twig', [ 'images' => [] ]);
+            return new Response($response);
+        }
+
         $response = $this->renderEngine->render(
             'crawl/crawl.html.twig',
-            empty($url) ? [] : $this->crawlService->getImagesFromUrl($url)
+            [ 'images' => $this->crawlService->getImagesFromUrl($url) ]
         );
 
         return new Response($response);

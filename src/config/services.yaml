@@ -1,4 +1,5 @@
 parameters:
+    crawler.cache-ttl: 3600
 
 services:
     _defaults:
@@ -12,3 +13,7 @@ services:
     App\Action\:
         resource: '../src/Action'
         tags: ["controller.service_arguments"]
+
+    App\Service\CrawlService:
+        arguments:
+            $cacheTimeToLive: "%crawler.cache-ttl%"

@@ -12,14 +12,19 @@ RUN addgroup -g 1000 php \
     && adduser -s /bin/sh -u 1000 -S php \
     && mkdir -p /app \
     && chown php:php /app \
-    && apk add --update \
+    && apk add --update --no-cache \
        php7-zip \
+       php7-redis \
+       php7-dom \
        zip \
        libzip-dev \
        chromium \
-       php7-redis \
-    && docker-php-ext-configure zip --with-libzip \
+       chromium-chromedriver \
+    && docker-php-ext-configure zip \
     && docker-php-ext-install zip
+
+ENV PANTHER_NO_SANDBOX 1
+ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver
 
 COPY --chown=php:php --from=builder /app/src/vendor /app/src/
 COPY src/* app/src/
