@@ -1,0 +1,7 @@
+language: bash
+
+services:
+  - docker
+
+script:
+  - docker-compose build -f docker/docker-compose.yml -f docker/docker-compose.dev.yml
