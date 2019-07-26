@@ -41,7 +41,9 @@ class Crawl
      */
     public function __invoke(Request $request): Response
     {
-        $form = $this->form->createBuilder(ScrapeRequestType::class)->getForm();
+        $form = $this->form->createBuilder(ScrapeRequestType::class)
+            ->setMethod('get')
+            ->getForm();
 
         $form->handleRequest($request);
 
