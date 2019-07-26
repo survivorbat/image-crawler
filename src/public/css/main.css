@@ -62,10 +62,10 @@
 }
 
 .form__input {
-    padding: 0.2em;
+    padding: 0.3em;
     -webkit-border-radius: 5%;
     -moz-border-radius: 5%;
-    border-radius: 5px;
+    border-radius: 2px;
     margin: 0.3em 0;
 }
 
