@@ -2,7 +2,7 @@
 
 ![Spider image](src/public/img/spider.jpg "Spider image")
 
-After having worked on a crawling script at work I decided to try out creating a Symfony
+After having worked on a crawling script at work, I decided to try out creating a Symfony
 4 application that fetches images from an url that you put in, just for fun and
 to experiment with this Symfony version.
 
