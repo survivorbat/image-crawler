@@ -6,13 +6,13 @@
 }
 
 .header__title {
-    font-size: 2.2em;
+    font-size: 2em;
     text-align: center;
     padding-bottom: 0.1em;
 }
 
 .header__image {
-    height: 200px;
+    height: 150px;
 }
 
 .content__h2 {
