@@ -20,9 +20,13 @@ services:
       - development_ssl:/ssl
 
   nginx:
+    build:
+      context: ../
+      dockerfile: docker/nginx/Dockerfile
     environment:
-      - server_name=localhost
-      - hsts_max_time=0m
+      server_name: localhost
+      hsts_max_time: 0m
+      fastcgi_cache_valid: 1s
     volumes:
       - development_ssl:/etc/letsencrypt/live/localhost
       - ../src/public:/var/www/html

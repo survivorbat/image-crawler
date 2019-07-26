@@ -32,6 +32,8 @@ RUN addgroup -g 1000 php \
 ENV PANTHER_NO_SANDBOX 1
 ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver
 
+WORKDIR /app/src
+
 COPY --chown=php:php --from=builder /app/src/vendor /app/src/
 COPY --chown=php:php docker/php-fpm /
-COPY src/* app/src/
+COPY src/* /app/src/

@@ -72,9 +72,9 @@ class CrawlService
     protected function normalizeImageNode(RemoteWebElement $element): ?ScrapedImage
     {
         return new ScrapedImage(
-            $element->getAttribute('src') ?? '',
-            $element->getAttribute('alt') ?? '',
-            $element->getAttribute('title') ?? ''
+            $element->getAttribute('src') ?? '/img/spider.jpg',
+            $element->getAttribute('alt') ?? 'None',
+            $element->getAttribute('title') ?? 'None'
         );
     }
 

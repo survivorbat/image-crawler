@@ -1,0 +1,3 @@
+.dockerignore
+Dockerfile
+/etc/nginx/temp/README.md

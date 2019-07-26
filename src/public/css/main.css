@@ -1,0 +1,91 @@
+.header__row {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+.header__title {
+    font-size: 2.2em;
+    text-align: center;
+    padding-bottom: 0.1em;
+}
+
+.header__image {
+    height: 200px;
+}
+
+.content__h2 {
+    font-size: 1.5em;
+}
+
+.content__p {
+    margin-top: 0.2em;
+    margin-bottom: 0.1em;
+}
+
+.content__backbutton-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 5em;
+}
+
+.content__backbutton {
+    color: blue;
+    text-decoration: underline;
+}
+
+.crawled__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.crawled__item {
+    display: block;
+    width: 30%;
+    border: gray 1px solid;
+    border-radius: 5px;
+    margin: 1%;
+    padding: 0.2em;
+    line-height: 1.2em;
+}
+
+.crawled__image {
+    margin-top: 1em;
+}
+
+.crawled__error {
+    margin-top: 1em;
+    font-style: italic;
+    color: #777777;
+}
+
+.form__input {
+    padding: 0.2em;
+    -webkit-border-radius: 5%;
+    -moz-border-radius: 5%;
+    border-radius: 5px;
+    margin: 0.3em 0;
+}
+
+.form__button {
+    padding: 0.2em;
+    border-radius: 0.2em;
+    margin: 0.3em 0;
+}
+
+.footer__row {
+    margin-top: 5em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+.footer__text {
+    font-size: 0.8em;
+}
+
+.col {
+    padding: 0 1.2em;
+}

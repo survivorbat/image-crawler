@@ -6,7 +6,7 @@ networks:
 
 services:
   php-fpm:
-    image: survivorbat/image-crawler
+    image: survivorbat/image-crawler-php
     restart: always
     expose:
       - 9000
@@ -27,17 +27,14 @@ services:
       - cache
     expose:
       - 6379
+
   nginx:
-    image: nginx:1.17.2-alpine
+    image: survivorbat/image-crawler-nginx
     restart: always
     ports:
       - 80:8080
       - 443:8443
-    volumes:
-      - ./nginx:/etc/nginx/temp
+    environment:
+      fastcgi_cache_valid: 60m
     networks:
       - nginx
-    command: ["/bin/sh", "-c", "rm -rf /var/cache/nginx/*
-      && rm -rfv /etc/nginx/conf.d/*
-      && for i in $$(find /etc/nginx/temp/ | grep -F .conf); do awk '{while(match($$0,\"[$$]{[^}]*}\")) {var=substr($$0,RSTART+2,RLENGTH -3);gsub(\"[$$]{\"var\"}\",ENVIRON[var])}}1' < \"$$i\" > $$(echo $${i/temp//}); done
-      && nginx"]

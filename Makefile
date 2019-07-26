@@ -1,6 +1,6 @@
 SHELL := /bin/sh
 
-MAKEFLAGS := --ignore-errors --no-print-directory
+MAKEFLAGS := --ignore-errors --silent --no-print-directory
 
 .DEFAULT_GOAL := help
 
@@ -16,6 +16,9 @@ up: ## Start containers in development mode
 
 down: ## Stop containers
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler down
+
+php.run: ## Run a command in the php container, requires a 'cmd' argument
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec php-fpm ${cmd}
 
 restart: ## Restart containers
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler restart

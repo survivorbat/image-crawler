@@ -5,15 +5,11 @@ namespace App\Entity;
 class ScrapedImage
 {
     /** @var string $src */
-    protected string $src = '';
+    protected string $src;
     /** @var string $alt */
-    protected string $alt = '';
+    protected string $alt;
     /** @var string $title */
-    protected string $title = '';
-    /** @var string|null $filePathname */
-    protected ?string $filePathname;
-    /** @var bool $isSaved */
-    protected bool $isSaved = false;
+    protected string $title;
 
     /**
      * ScrapedImage constructor.
@@ -31,7 +27,7 @@ class ScrapedImage
     /**
      * @return string
      */
-    public function getHref(): string
+    public function getSrc(): string
     {
         return $this->src;
     }
@@ -50,41 +46,5 @@ class ScrapedImage
     public function getTitle(): string
     {
         return $this->title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilePathname(): ?string
-    {
-        return $this->filePathname;
-    }
-
-    /**
-     * @param string|null $filePathname
-     * @return ScrapedImage
-     */
-    public function setFilePathname(?string $filePathname): ScrapedImage
-    {
-        $this->filePathname = $filePathname;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSaved(): bool
-    {
-        return $this->isSaved;
-    }
-
-    /**
-     * @param bool $isSaved
-     * @return ScrapedImage
-     */
-    public function setIsSaved(bool $isSaved): ScrapedImage
-    {
-        $this->isSaved = $isSaved;
-        return $this;
     }
 }
