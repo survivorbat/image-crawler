@@ -29,6 +29,7 @@ services:
       server_name: localhost
       hsts_max_time: 0m
       fastcgi_cache_valid: 1s
+      cache_max_age: 1
     volumes:
       - development_ssl:/etc/letsencrypt/live/localhost
       - ../src/public:/var/www/html
