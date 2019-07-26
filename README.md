@@ -37,7 +37,7 @@ Setting up the application is as easy as:
 - Remove empty images from results
 - Ensure chromium does not crash in the background (or perhaps switch to simpler crawler)
 - Add username and password to Redis
-- Create production configuratien (ansible?)
+- Create production configuration (ansible?)
 - Perhaps put the browser in a different container
 - Add phpstan
 - Add php-cs-fixer
