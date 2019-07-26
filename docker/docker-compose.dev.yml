@@ -11,8 +11,10 @@ services:
     volumes:
       - ../src:/app/src
     environment:
-      - APP_ENV=dev
-      - APP_DEBUG=true
+      APP_ENV: dev
+      APP_DEBUG: true
+      APP_SECRET: thisisasampletokenthatiputhereonlyfordevelopmentproductionhasasecretsecretofcourse
+
   ssl:
     build:
       context: ssl-dev

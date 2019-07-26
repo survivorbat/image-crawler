@@ -14,10 +14,10 @@ services:
       - nginx
       - cache
     environment:
-      - APP_ENV=prod
-      - APP_DEBUG=false
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      APP_ENV: prod
+      APP_DEBUG: false
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   # TODO: Ensure Redis is secure with username/password
   redis:

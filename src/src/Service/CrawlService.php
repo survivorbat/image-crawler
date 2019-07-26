@@ -18,18 +18,16 @@ class CrawlService
     protected $cacheTTL;
 
     /**
-     * TODO: Inject client
-     *
      * CrawlService constructor.
      * @param AdapterInterface $adapter
+     * @param Client $client
      * @param int $cacheTimeToLive
      */
-    public function __construct(AdapterInterface $adapter, int $cacheTimeToLive)
+    public function __construct(AdapterInterface $adapter, Client $client, int $cacheTimeToLive)
     {
         $this->cache = $adapter;
         $this->cacheTTL = $cacheTimeToLive;
-
-        $this->client = Client::createChromeClient();
+        $this->client = $client;
     }
 
     /**
@@ -47,13 +45,15 @@ class CrawlService
 
         $crawler = $this->client->request('GET', $url);
 
-        $imageNodes = $crawler
-            ->filter('img')
-            ->getIterator();
+        $imageNodes = $crawler->filter('img')->getIterator();
 
         $crawledImages = [];
 
         foreach ($imageNodes as $imageNode) {
+            if (!$imageNode->getAttribute('src')) {
+                continue;
+            }
+
             $crawledImages[] = $this->normalizeImageNode($imageNode);
         }
 
@@ -69,7 +69,7 @@ class CrawlService
      * @param RemoteWebElement $element
      * @return ScrapedImage|null
      */
-    protected function normalizeImageNode(RemoteWebElement $element): ?ScrapedImage
+    protected function normalizeImageNode(RemoteWebElement $element): ScrapedImage
     {
         return new ScrapedImage(
             $element->getAttribute('src') ?? '/img/spider.jpg',

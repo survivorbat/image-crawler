@@ -24,17 +24,6 @@
     margin-bottom: 0.1em;
 }
 
-.content__backbutton-row {
-    display: flex;
-    justify-content: center;
-    margin-top: 5em;
-}
-
-.content__backbutton {
-    color: blue;
-    text-decoration: underline;
-}
-
 .crawled__list {
     display: flex;
     flex-wrap: wrap;
@@ -88,4 +77,7 @@
 
 .col {
     padding: 0 1.2em;
+}
+.row {
+    margin-top: 2em;
 }

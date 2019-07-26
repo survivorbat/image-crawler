@@ -17,13 +17,19 @@ services:
     App\Service\CrawlService:
         arguments:
             $cacheTimeToLive: "%crawler.cache-ttl%"
-            $adapter: "@RedisAdapter"
+            $adapter: "@app.cache.adapter"
+            $client: "@app.crawl.client"
 
-    RedisAdapter:
+    app.cache.adapter:
         class: Symfony\Component\Cache\Adapter\RedisAdapter
         arguments:
             - "@snc_redis.default"
 
-    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+    app.session.handler:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
         arguments:
             - '@snc_redis.default'
+
+    app.crawl.client:
+        class: Symfony\Component\Panther\Client
+        factory: ['Symfony\Component\Panther\Client', createChromeClient]

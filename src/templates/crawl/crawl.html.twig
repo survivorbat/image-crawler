@@ -2,20 +2,38 @@
 
 {% block content %}
     <main class="row lg">
-        <div class="col md-9">
-            <h2 class="content__h2">Start crawling!</h2>
-            <form action="{{ path('crawl') }}" method="get" class="form__element">
-                <label for="url" class="form__label">
-                    <input class="form__input" type="url" name="url" placeholder="http://example.com" required/>
-                </label>
-                <button type="submit" class="form__button">Crawl!</button>
-            </form>
+        <div class="col md-8">
+            <h2 class="content__h2">Getting started</h2>
+            {{ form_start(form) }}
+                {{ form_row(form.url) }}
+                <button class="form__button" type="submit">Retrieve images</button>
+            {{ form_end(form) }}
         </div>
-        <div class="col md-3">
+        <div class="col md-4">
             <h2 class="content__h2">What's this?</h2>
             <p class="content__p">
                 This image crawler is a small practice/sandbox project that allows you to fetch all the images from a particular website.
             </p>
         </div>
     </main>
+
+    {% if images is defined %}
+        <div class="row lg">
+            <div class="col">
+                <h2 class="content__h2">Results:</h2>
+                <ul class="crawled__list">
+                    {% for image in images %}
+                        <li class="crawled__item">
+                            <strong>Title: </strong>
+                            {{- image.title -}} <br/>
+                            <strong>Alt: </strong>
+                            {{- image.alt -}} <br/>
+                            <img class="crawled__image" src="{{ image.src }}" title="{{ image.title }}" alt="{{ image.alt }}">
+                        </li>
+                    {% else %}
+                        <p class="crawled__error">ImageCrawler could not find any images on this website :(</p>
+                    {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

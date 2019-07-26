@@ -1,0 +1,6 @@
+App\Entity\ScrapeRequest:
+  properties:
+    url:
+      - NotBlank: ~
+      - Url:
+          protocols: [http, https]
