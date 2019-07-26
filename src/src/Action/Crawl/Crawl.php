@@ -3,6 +3,7 @@
 namespace App\Action\Crawl;
 
 use App\Service\CrawlService;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ class Crawl
      *
      * @param Request $request
      * @return Response
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __invoke(Request $request): Response
     {
@@ -43,7 +44,7 @@ class Crawl
         }
 
         $response = $this->renderEngine->render(
-            'crawl/crawl.html.twig',
+            'crawl/result.html.twig',
             [ 'images' => $this->crawlService->getImagesFromUrl($url) ]
         );
 

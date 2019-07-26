@@ -13,18 +13,25 @@ RUN addgroup -g 1000 php \
     && mkdir -p /app \
     && chown php:php /app \
     && apk add --update --no-cache \
+       alpine-sdk \
        php7-zip \
        php7-redis \
        php7-dom \
        zip \
+       php7-opcache \
        libzip-dev \
        chromium \
        chromium-chromedriver \
+       autoconf \
+    && pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
     && docker-php-ext-configure zip \
-    && docker-php-ext-install zip
+    && docker-php-ext-enable redis \
+    && docker-php-ext-install zip opcache
 
 ENV PANTHER_NO_SANDBOX 1
 ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver
 
 COPY --chown=php:php --from=builder /app/src/vendor /app/src/
+COPY --chown=php:php docker/php-fpm /
 COPY src/* app/src/

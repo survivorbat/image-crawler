@@ -1,4 +1,16 @@
 {
+    "cache/adapter-common": {
+        "version": "1.1.0"
+    },
+    "cache/hierarchical-cache": {
+        "version": "1.0.0"
+    },
+    "cache/redis-adapter": {
+        "version": "1.0.0"
+    },
+    "cache/tag-interop": {
+        "version": "1.0.0"
+    },
     "facebook/webdriver": {
         "version": "1.7.1"
     },
@@ -13,6 +25,24 @@
     },
     "psr/log": {
         "version": "1.1.0"
+    },
+    "psr/simple-cache": {
+        "version": "1.0.1"
+    },
+    "snc/redis-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "e9c58bfc414cfb7f06e8e5ae9f589868498f5d6a"
+        },
+        "files": [
+            "config/packages/snc_redis.yaml"
+        ]
+    },
+    "symfony/asset": {
+        "version": "v4.3.2"
     },
     "symfony/browser-kit": {
         "version": "v4.3.2"

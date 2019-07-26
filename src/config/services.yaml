@@ -17,3 +17,13 @@ services:
     App\Service\CrawlService:
         arguments:
             $cacheTimeToLive: "%crawler.cache-ttl%"
+            $adapter: "@RedisAdapter"
+
+    RedisAdapter:
+        class: Symfony\Component\Cache\Adapter\RedisAdapter
+        arguments:
+            - "@snc_redis.default"
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@snc_redis.default'
