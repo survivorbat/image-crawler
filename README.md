@@ -1,5 +1,7 @@
 # Image Crawler
 
+[![Build Status](https://travis-ci.com/survivorbat/image-crawler.svg?branch=master)](https://travis-ci.com/survivorbat/image-crawler)
+
 ![Spider image](src/public/img/spider.jpg "Spider image")
 
 After having worked on a crawling script at work, I decided to try out creating a Symfony
