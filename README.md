@@ -50,7 +50,6 @@ Setting up the application is as easy as:
 
 - Not all classes can make use of typed properties because of autowiring
 - Https/http mixing goes wrong
-- Right now it can only handle absolute src's
 
 ## Notes
 

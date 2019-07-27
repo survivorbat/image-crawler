@@ -66,11 +66,26 @@ class CrawlService
      */
     protected function normalizeImageNode(\DOMElement $element, string $baseUrl): ScrapedImage
     {
+        $src = $element->getAttribute('src');
+
+        if (!$this->containsBaseUrl($src)) {
+            $src = "$baseUrl/$src";
+        }
+
         return new ScrapedImage(
-            $element->getAttribute('src') ?? '/img/spider.jpg',
+            $src,
             $element->getAttribute('alt') ?? 'None',
             $element->getAttribute('title') ?? 'None'
         );
+    }
+
+    /**
+     * @param string $url
+     * @return bool
+     */
+    protected function containsBaseUrl(string $url): bool
+    {
+        return preg_match("/^(https|http):\/\/.*/", $url);
     }
 
     /**
