@@ -18,7 +18,7 @@ down: ## Stop containers
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler down
 
 php.run: ## Run a command in the php container, requires a 'cmd' argument
-	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec php-fpm ${cmd}
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm ${cmd}
 
 composer.install: ## Run composer install in the php container in development
 	make php.run cmd="bin/composer install"
