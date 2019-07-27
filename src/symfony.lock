@@ -11,8 +11,17 @@
     "cache/tag-interop": {
         "version": "1.0.0"
     },
-    "facebook/webdriver": {
-        "version": "1.7.1"
+    "fabpot/goutte": {
+        "version": "v3.2.3"
+    },
+    "guzzlehttp/guzzle": {
+        "version": "6.3.3"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.6.1"
     },
     "predis/predis": {
         "version": "v1.1.1"
@@ -23,11 +32,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.0"
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "snc/redis-bundle": {
         "version": "2.0",
@@ -69,6 +84,9 @@
             "config/bootstrap.php"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v4.3.2"
+    },
     "symfony/debug": {
         "version": "v4.3.2"
     },
@@ -83,9 +101,6 @@
     },
     "symfony/event-dispatcher-contracts": {
         "version": "v1.1.5"
-    },
-    "symfony/expression-language": {
-        "version": "v4.3.2"
     },
     "symfony/filesystem": {
         "version": "v4.3.2"
@@ -127,12 +142,6 @@
             "src/Kernel.php"
         ]
     },
-    "symfony/http-client": {
-        "version": "v4.3.2"
-    },
-    "symfony/http-client-contracts": {
-        "version": "v1.1.5"
-    },
     "symfony/http-foundation": {
         "version": "v4.3.2"
     },
@@ -151,9 +160,6 @@
     "symfony/options-resolver": {
         "version": "v4.3.2"
     },
-    "symfony/panther": {
-        "version": "v0.4.1"
-    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.11.0"
     },
@@ -168,9 +174,6 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
-    },
-    "symfony/process": {
-        "version": "v4.3.2"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"

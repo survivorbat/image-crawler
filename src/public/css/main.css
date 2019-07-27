@@ -23,6 +23,7 @@
 }
 
 .crawled__list {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -40,6 +41,11 @@
 
 .crawled__image {
     margin-top: 1em;
+    width: 100%;
+}
+
+.crawled__col {
+    width: 100%;
 }
 
 .crawled__error {

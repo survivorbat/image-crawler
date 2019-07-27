@@ -1,5 +1,6 @@
 src/var
 src/vendor
+src/bin/composer
 .dockerignore
 .gitignore
 .travis.yml

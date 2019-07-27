@@ -31,5 +31,4 @@ services:
             - '@snc_redis.default'
 
     app.crawl.client:
-        class: Symfony\Component\Panther\Client
-        factory: ['Symfony\Component\Panther\Client', createChromeClient]
+        class: Goutte\Client

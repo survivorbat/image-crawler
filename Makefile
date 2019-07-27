@@ -1,6 +1,6 @@
 SHELL := /bin/sh
 
-MAKEFLAGS := --ignore-errors --silent --no-print-directory
+MAKEFLAGS := --silent --no-print-directory
 
 .DEFAULT_GOAL := help
 

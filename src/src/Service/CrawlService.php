@@ -3,10 +3,9 @@
 namespace App\Service;
 
 use App\Entity\ScrapedImage;
-use Facebook\WebDriver\Remote\RemoteWebElement;
+use Goutte\Client;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Panther\Client;
 
 class CrawlService
 {
@@ -32,44 +31,40 @@ class CrawlService
 
     /**
      * @param string $url
+     * @param bool $ignoreCache
      * @return ScrapedImage[]|array
      * @throws InvalidArgumentException
      */
-    public function getImagesFromUrl(string $url): array
+    public function getImagesFromUrl(string $url, bool $ignoreCache = false): array
     {
         $cacheItem = $this->cache->getItem($this->getCacheKeyOfUrl($url));
 
-        if ($cacheItem->isHit()) {
+        if ($cacheItem->isHit() && !$ignoreCache) {
             return $cacheItem->get();
         }
 
-        $crawler = $this->client->request('GET', $url);
-
-        $imageNodes = $crawler->filter('img')->getIterator();
+        $imageNodes = $this->client->request('GET', $url)
+            ->filter('img');
 
         $crawledImages = [];
 
         foreach ($imageNodes as $imageNode) {
-            if (!$imageNode->getAttribute('src')) {
-                continue;
-            }
-
-            $crawledImages[] = $this->normalizeImageNode($imageNode);
+            $crawledImages[] = $this->normalizeImageNode($imageNode, $url);
         }
 
         $this->cache->save(
-            $cacheItem->set($crawledImages)
-                ->expiresAfter($this->cacheTTL)
+            $cacheItem->set($crawledImages)->expiresAfter($this->cacheTTL)
         );
 
         return $crawledImages;
     }
 
     /**
-     * @param RemoteWebElement $element
+     * @param \DOMElement $element
+     * @param string $baseUrl
      * @return ScrapedImage|null
      */
-    protected function normalizeImageNode(RemoteWebElement $element): ScrapedImage
+    protected function normalizeImageNode(\DOMElement $element, string $baseUrl): ScrapedImage
     {
         return new ScrapedImage(
             $element->getAttribute('src') ?? '/img/spider.jpg',

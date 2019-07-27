@@ -31,15 +31,16 @@ Setting up the application is as easy as:
 
 ## Possible plans for the future
 
+- ~~Perhaps put the browser in a different container~~
+- ~~Ensure chromium does not crash in the background (or perhaps switch to simpler crawler)~~
 - Allow mixed content (http/https)
 - Add more styling
 - Add more security
 - Remove empty images from results
-- Ensure chromium does not crash in the background (or perhaps switch to simpler crawler)
 - Add username and password to Redis
 - Create production configuration (ansible?)
-- Perhaps put the browser in a different container
 - Add phpstan
+- Add tests
 - Add php-cs-fixer
 - Perhaps persist Redis data
 - Add in some error pages for better exception handling
@@ -47,9 +48,7 @@ Setting up the application is as easy as:
 ## Known quirks
 
 - Not all classes can make use of typed properties because of autowiring
-- Sometimes the crawler times out and occupies the internal port, restarting the application
-fixes this
-- Plain http urls probably won't work
+- ls probably won't work
 
 ## Notes
 

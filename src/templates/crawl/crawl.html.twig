@@ -20,15 +20,15 @@
 
     {% if images is defined %}
         <div class="row lg">
-            <div class="col">
+            <div class="col crawled__col">
                 <h2 class="content__h2">Results:</h2>
                 <ul class="crawled__list">
                     {% for image in images %}
                         <li class="crawled__item">
                             <strong>Title: </strong>
-                            {{- image.title -}} <br/>
+                            {{- image.title | default('(empty)') -}} <br/>
                             <strong>Alt: </strong>
-                            {{- image.alt -}} <br/>
+                            {{- image.alt | default('(empty)') -}} <br/>
                             <img class="crawled__image" src="{{ image.src }}" title="{{ image.title }}" alt="{{ image.alt }}">
                         </li>
                     {% else %}

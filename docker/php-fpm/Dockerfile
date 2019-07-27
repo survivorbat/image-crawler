@@ -6,31 +6,22 @@ USER php
 
 RUN composer install -d /app/src --optimize-autoloader --ignore-platform-reqs --no-interaction --no-suggest --no-scripts
 
-FROM php:7.4.0alpha3-fpm-alpine
 
-RUN addgroup -g 1000 php \
-    && adduser -s /bin/sh -u 1000 -S php \
-    && mkdir -p /app \
+FROM php:7.4.0alpha3-fpm-alpine as runtime
+
+COPY --from=builder /etc/passwd /etc/group /etc/
+
+RUN mkdir -p /app \
     && chown php:php /app \
     && apk add --update --no-cache \
        alpine-sdk \
-       php7-zip \
        php7-redis \
-       php7-dom \
-       zip \
        php7-opcache \
-       libzip-dev \
-       chromium \
-       chromium-chromedriver \
        autoconf \
     && pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
-    && docker-php-ext-configure zip \
     && docker-php-ext-enable redis \
-    && docker-php-ext-install zip opcache
-
-ENV PANTHER_NO_SANDBOX 1
-ENV PANTHER_CHROME_DRIVER_BINARY /usr/lib/chromium/chromedriver
+    && docker-php-ext-install opcache
 
 WORKDIR /app/src
 
