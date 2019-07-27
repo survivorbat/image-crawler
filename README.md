@@ -49,7 +49,8 @@ Setting up the application is as easy as:
 ## Known quirks
 
 - Not all classes can make use of typed properties because of autowiring
-- ls probably won't work
+- Https/http mixing goes wrong
+- Right now it can only handle absolute src's
 
 ## Notes
 
