@@ -1,4 +1,4 @@
-App\Entity\ScrapeRequest:
+App\Model\ScrapeRequest:
   properties:
     url:
       - NotBlank: ~

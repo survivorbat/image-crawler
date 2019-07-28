@@ -1,0 +1,54 @@
+App\Entity\SavedImage:
+  type: entity
+  id:
+    id:
+      type: string
+      id: true
+      generator:
+        strategy: UUID
+  fields:
+    filename:
+      type: string
+      options:
+        default: ''
+    pathname:
+      type: string
+      options:
+        default: ''
+    baseName:
+      type: string
+      options:
+        default: ''
+    publicPath:
+      type: string
+      options:
+        default: ''
+    realPath:
+      type: string
+      options:
+        default: ''
+    extension:
+      type: string
+      options:
+        default: ''
+    path:
+      type: string
+      options:
+        default: ''
+    createdAt:
+      type: datetime
+      nullable: true
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      nullable: true
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    scrapeOrigin:
+      targetEntity: ScrapeOrigin
+      mappedBy: savedImages
+      inversedBy: scrapeOrigin

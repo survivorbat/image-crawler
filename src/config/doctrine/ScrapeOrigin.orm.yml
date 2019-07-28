@@ -1,0 +1,30 @@
+App\Entity\ScrapeOrigin:
+  type: entity
+  id:
+    id:
+      type: string
+      id: true
+      generator:
+        strategy: UUID
+  fields:
+    url:
+      type: string
+      options:
+        default: ''
+    createdAt:
+      type: datetime
+      nullable: true
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      nullable: true
+      gedmo:
+        timestampable:
+          on: update
+  oneToMany:
+    savedImages:
+      targetEntity: SavedImage
+      mappedBy: scrapeOrigin
+      inversedBy: scrapeOrigin

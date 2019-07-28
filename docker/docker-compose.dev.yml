@@ -14,12 +14,19 @@ services:
       APP_ENV: dev
       APP_DEBUG: "true"
       APP_SECRET: thisisasampletokenthatiputhereonlyfordevelopmentproductionhasasecretsecretofcourse
+      DATABASE_URL: postgres://developer:developmentpassword@postgres/imagecrawler
 
   ssl:
     build:
       context: ssl-dev
     volumes:
       - development_ssl:/ssl
+
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: developmentpassword
+    ports:
+      - 5432:5432
 
   nginx:
     build:

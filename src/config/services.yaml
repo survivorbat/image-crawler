@@ -1,5 +1,6 @@
 parameters:
     crawler.cache-ttl: 3600
+    save_dir: "%kernel.project_dir%/public/saves"
 
 services:
     _defaults:
@@ -19,6 +20,10 @@ services:
             $cacheTimeToLive: "%crawler.cache-ttl%"
             $adapter: "@app.cache.adapter"
             $client: "@app.crawl.client"
+
+    App\Service\SavedImageService:
+        arguments:
+            $saveDir:
 
     app.cache.adapter:
         class: Symfony\Component\Cache\Adapter\RedisAdapter

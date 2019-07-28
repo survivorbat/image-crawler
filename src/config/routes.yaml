@@ -3,3 +3,14 @@ crawl:
   defaults:
     _controller: App\Action\Crawl\Crawl
     url: ""
+
+save:
+  path: /save
+  defaults:
+    _controllers: App\Action\SavedImage\SaveImage
+    url: ""
+
+saved:
+  path: /saved
+  defaults:
+    _controllers: App\Action\SaveDImage\SavedImages

@@ -34,6 +34,7 @@ Setting up the application is as easy as:
 
 - ~~Perhaps put the browser in a different container~~
 - ~~Ensure chromium does not crash in the background (or perhaps switch to simpler crawler)~~
+- Add the ability to save images
 - Allow mixed content (http/https)
 - Add more styling
 - Add more security

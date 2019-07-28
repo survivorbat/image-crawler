@@ -2,26 +2,32 @@
 
 namespace App\Entity;
 
+use App\Model\ScrapedImage;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+
 class SavedImage
 {
+    use TimestampableEntity;
+    use IdTrait;
+
     /** @var string $filename */
-    protected $filename = '';
+    protected string $filename = '';
     /** @var string $pathname */
-    protected $pathname = '';
+    protected string $pathname = '';
     /** @var string $baseName */
-    protected $baseName = '';
+    protected string $baseName = '';
     /** @var string $publicPath */
-    protected $publicPath = '';
+    protected string $publicPath = '';
     /** @var string $realPath */
-    protected $realPath = '';
+    protected string $realPath = '';
     /** @var string $extension */
-    protected $extension = '';
+    protected string $extension = '';
     /** @var string $path */
-    protected $path = '';
+    protected string $path = '';
+    /** @var ScrapedImage $scrapeOrigin */
+    protected string $scrapeOrigin = '';
     /** @var resource|null $file */
     protected $file;
-    /** @var ScrapedImage $scrapeOrigin */
-    protected $scrapeOrigin;
 
     /**
      * @return string

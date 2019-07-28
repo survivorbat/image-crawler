@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\ScrapeRequest;
+use App\Model\ScrapeRequest;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -5,7 +5,11 @@ networks:
   cache: ~
   postgres: ~
 
+volumes:
+  db-data: ~
+
 services:
+  # TODO: Persist logs
   php-fpm:
     image: survivorbat/image-crawler-php:0.1
     restart: always
@@ -18,11 +22,11 @@ services:
     environment:
       APP_ENV: prod
       APP_DEBUG: "false"
-      DATABASE_URL: postgres://postgres/imagecrawler
       REDIS_HOST: redis
       REDIS_PORT: 6379
 
   # TODO: Ensure Redis is secure with username/password
+  # TODO: Persist data with a volume
   redis:
     image: redis:5.0.5-alpine
     restart: always
@@ -31,14 +35,19 @@ services:
     expose:
       - 6379
 
-  #TODO: Ensure Postgres is secure with username/password
   postgres:
     image: postgres:12-alpine
     networks:
       - postgres
     expose:
       - 5432
+    volumes:
+      - db-data:/var/lib/pgsql/data
+    environment:
+      POSTGRES_USER: developer
+      # TODO: Add 'production' password
 
+  # TODO: Persist logs with a volume
   nginx:
     image: survivorbat/image-crawler-nginx:0.1
     restart: always

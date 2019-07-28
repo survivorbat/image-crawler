@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\ScrapedImage;
+use App\Model\ScrapedImage;
 use Goutte\Client;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -75,7 +75,8 @@ class CrawlService
         return new ScrapedImage(
             $src,
             $element->getAttribute('alt') ?? 'None',
-            $element->getAttribute('title') ?? 'None'
+            $element->getAttribute('title') ?? 'None',
+            $baseUrl
         );
     }
 

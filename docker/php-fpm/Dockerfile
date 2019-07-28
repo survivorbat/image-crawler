@@ -17,11 +17,12 @@ RUN mkdir -p /app \
        alpine-sdk \
        php7-redis \
        php7-opcache \
+       postgresql-dev \
        autoconf \
     && pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
+    && rm -rf /tmp/pear \
     && docker-php-ext-enable redis \
-    && docker-php-ext-install opcache
+    && docker-php-ext-install opcache pdo pdo_pgsql
 
 WORKDIR /app/src
 
