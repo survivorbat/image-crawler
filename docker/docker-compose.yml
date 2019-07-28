@@ -3,6 +3,7 @@ version: '3.3'
 networks:
   nginx: ~
   cache: ~
+  postgres: ~
 
 services:
   php-fpm:
@@ -13,9 +14,11 @@ services:
     networks:
       - nginx
       - cache
+      - postgres
     environment:
       APP_ENV: prod
       APP_DEBUG: "false"
+      DATABASE_URL: postgres://postgres/imagecrawler
       REDIS_HOST: redis
       REDIS_PORT: 6379
 
@@ -27,6 +30,14 @@ services:
       - cache
     expose:
       - 6379
+
+  #TODO: Ensure Postgres is secure with username/password
+  postgres:
+    image: postgres:12-alpine
+    networks:
+      - postgres
+    expose:
+      - 5432
 
   nginx:
     image: survivorbat/image-crawler-nginx:0.1
