@@ -6,8 +6,8 @@ USER php
 
 RUN composer install -d /app/src --optimize-autoloader --ignore-platform-reqs --no-interaction --no-suggest --no-scripts
 
-
-FROM php:7.4.0alpha3-fpm-alpine as runtime
+# Runtime
+FROM php:7.4.0alpha3-fpm-alpine
 
 COPY --from=builder /etc/passwd /etc/group /etc/
 
@@ -26,6 +26,6 @@ RUN mkdir -p /app \
 
 WORKDIR /app/src
 
-COPY --chown=php:php --from=builder /app/src/vendor /app/src/
+COPY --chown=php:php --from=builder /app/src/vendor /app/src/vendor
 COPY --chown=php:php docker/php-fpm /
 COPY src/* /app/src/
