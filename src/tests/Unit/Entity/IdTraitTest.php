@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\IdTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass IdTrait
@@ -21,6 +22,6 @@ class IdTraitTest extends TestCase
         };
 
         $object->setId('hello');
-        $this->
+        $this->assertEquals('hello', $object->getId());
     }
 }

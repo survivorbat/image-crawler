@@ -23,6 +23,9 @@ php.run: ## Run a command in the php container, requires a 'cmd' argument
 composer.install: ## Run composer install in the php container in development
 	make php.run cmd="bin/composer install"
 
+composer.update: ## Run composer update in the php container in development
+	make php.run cmd="bin/composer update"
+
 restart: ## Restart containers
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler restart
 

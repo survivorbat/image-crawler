@@ -9,7 +9,7 @@ services:
       context: ../
       dockerfile: docker/php-fpm/Dockerfile
     volumes:
-      - ../src:/app/src
+      - ../src:/app/src:cached
     environment:
       APP_ENV: dev
       APP_DEBUG: "true"
@@ -39,4 +39,4 @@ services:
       cache_max_age: 1
     volumes:
       - development_ssl:/etc/letsencrypt/live/localhost
-      - ../src/public:/var/www/html
+      - ../src/public:/var/www/html:cached

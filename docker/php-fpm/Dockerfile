@@ -26,6 +26,9 @@ RUN mkdir -p /app \
 
 WORKDIR /app/src
 
+# TODO: Remove this step, add an entrypoint to handle installing composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 COPY --chown=php:php --from=builder /app/src/vendor /app/src/vendor
 COPY --chown=php:php docker/php-fpm /
 COPY src/* /app/src/
