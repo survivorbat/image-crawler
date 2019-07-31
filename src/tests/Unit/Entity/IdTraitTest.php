@@ -5,27 +5,22 @@ namespace App\Tests\Unit\Entity;
 use App\Entity\IdTrait;
 
 /**
- * TODO: Finish this
- *
- * @coversDefaultClass
+ * @coversDefaultClass IdTrait
+ * @covers ::__construct
  */
 class IdTraitTest extends TestCase
 {
-    /** @var $idTraitClass */
-    protected $idTraitClass;
-
     /**
-     * {@inheritDoc}
+     * @covers ::setId
+     * @covers ::getId
      */
-    public function setUp(): void
-    {
-        $this->idTraitClass = new class {
-            use IdTrait;
-        };
-    }
-
     public function testIfClassCanSetId(): void
     {
+        $object = new class {
+            use IdTrait;
+        };
 
+        $object->setId('hello');
+        $this->
     }
 }
