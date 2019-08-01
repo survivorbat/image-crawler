@@ -1,4 +1,4 @@
-FROM survivorbat/php7.4-composer as builder
+FROM survivorbat/php7.4-composer AS builder
 
 COPY --chown=php:php src/composer.json src/composer.lock src/symfony.lock /app/src/
 
@@ -7,7 +7,7 @@ USER php
 RUN composer install -d /app/src --optimize-autoloader --ignore-platform-reqs --no-interaction --no-suggest --no-scripts
 
 # Runtime
-FROM php:7.4.0alpha3-fpm-alpine
+FROM php:7.4.0alpha3-fpm-alpine AS runtime
 
 COPY --from=builder /etc/passwd /etc/group /etc/
 
@@ -26,9 +26,16 @@ RUN mkdir -p /app \
 
 WORKDIR /app/src
 
-# TODO: Remove this step, add an entrypoint to handle installing composer
-COPY --from=composer /usr/bin/composer /usr/bin/composer
-
 COPY --chown=php:php --from=builder /app/src/vendor /app/src/vendor
 COPY --chown=php:php docker/php-fpm /
-COPY src/* /app/src/
+COPY src/ /app/src/
+
+# Test with composer
+FROM runtime AS test
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+RUN /app/src/bin/phpunit
+
+# Final image
+FROM runtime
