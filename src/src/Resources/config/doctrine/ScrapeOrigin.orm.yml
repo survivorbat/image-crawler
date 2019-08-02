@@ -27,4 +27,4 @@ App\Entity\ScrapeOrigin:
     savedImages:
       targetEntity: SavedImage
       mappedBy: scrapeOrigin
-      inversedBy: scrapeOrigin
+      inversedBy: savedImages

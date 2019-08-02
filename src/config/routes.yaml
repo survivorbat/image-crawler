@@ -1,16 +1,15 @@
-crawl:
+app.crawl:
   path: /
   defaults:
     _controller: App\Action\Crawl\Crawl
     url: ""
 
-save:
+app.save:
   path: /save
   defaults:
-    _controllers: App\Action\SavedImage\SaveImage
-    url: ""
+    _controller: App\Action\SavedImage\SaveImages
 
-saved:
+app.saved:
   path: /saved
   defaults:
-    _controllers: App\Action\SaveDImage\SavedImages
+    _controller: App\Action\SavedImage\SavedImages

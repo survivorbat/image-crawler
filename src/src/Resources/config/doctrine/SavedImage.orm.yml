@@ -23,14 +23,6 @@ App\Entity\SavedImage:
       type: string
       options:
         default: ''
-    realPath:
-      type: string
-      options:
-        default: ''
-    extension:
-      type: string
-      options:
-        default: ''
     path:
       type: string
       options:
@@ -51,4 +43,4 @@ App\Entity\SavedImage:
     scrapeOrigin:
       targetEntity: ScrapeOrigin
       mappedBy: savedImages
-      inversedBy: scrapeOrigin
+      inversedBy: savedImages

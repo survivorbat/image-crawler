@@ -1,25 +1,8 @@
 {% extends "@app/base.html.twig" %}
 
 {% block content %}
-    <main class="row lg">
-        <div class="col md-8">
-            <h2 class="content__h2">Getting started</h2>
-            {{ form_start(form) }}
-                {{ form_row(form.url) }}
-                <button class="form__button" type="submit">Retrieve images</button>
-            {{ form_end(form) }}
-        </div>
-        <div class="col md-4">
-            <h2 class="content__h2">What's this?</h2>
-            <p class="content__p">
-                This image crawler is a small practice/sandbox project that allows you to fetch all the images from a particular website.
-                Please note that it tends to crash sometimes in the background, so be gentle.
-            </p>
-        </div>
-    </main>
-
     {% if images is defined %}
-        <div class="row lg">
+        <main class="row lg">
             <div class="col crawled__col">
                 <h2 class="content__h2">Results:</h2>
                 <ul class="crawled__list">
@@ -35,6 +18,14 @@
                         <p class="crawled__error">ImageCrawler could not find any images on this website :(</p>
                     {% endfor %}
             </div>
-        </div>
+        </main>
+    {% else %}
+        <main class="row lg">
+            <div class="col crawled__col">
+                <p class="content__p">
+                    It seems no images are saved yet! <a class="content__a" href="{{ path('app.save') }}">Start saving!</a>
+                </p>
+            </div>
+        </main>
     {% endif %}
 {% endblock %}

@@ -23,7 +23,7 @@ services:
 
     App\Service\SavedImageService:
         arguments:
-            $saveDir:
+            $saveDir: "%save_dir%"
 
     app.cache.adapter:
         class: Symfony\Component\Cache\Adapter\RedisAdapter

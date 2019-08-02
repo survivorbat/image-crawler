@@ -7,7 +7,6 @@ use App\Model\ScrapedImage;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Intl\Exception\NotImplementedException;
 
 class SavedImageService
 {
@@ -18,7 +17,7 @@ class SavedImageService
     /** @var EntityRepository $repository */
     protected $repository;
     /** @var string $saveDir */
-    protected $saveDir;
+    protected string $saveDir;
 
     /**
      * SaveService constructor.
@@ -43,15 +42,29 @@ class SavedImageService
     }
 
     /**
-     * @param array $images
+     * TODO: Add public path and scrape origin
+     *
+     * @param ScrapedImage[]|array $images
      * @return void
      */
     public function saveImages(array $images): void
     {
         foreach ($images as $image) {
-            $savedImage = (new SavedImage());
+            $path = $this->saveDir . DIRECTORY_SEPARATOR . md5($image->getScrapeUrl());
+            $this->fs->mkdir($path);
+            $fileName = md5($image->getSrc()) . '.png';
+            $fileName = $path . DIRECTORY_SEPARATOR . $fileName;
 
-            $this->em->persist($image);
+            $savedImage = (new SavedImage())
+                ->setFilename($fileName)
+                ->setPath($path)
+                ->setPathname($fileName);
+
+            $imageContents = file_get_contents($image->getSrc());
+            $imageFile = imagecreatefromstring($imageContents);
+            imagepng($imageFile, $fileName);
+
+            $this->em->persist($savedImage);
         }
 
         $this->em->flush();

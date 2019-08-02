@@ -1,4 +1,4 @@
-FROM survivorbat/php7.4-composer AS builder
+FROM survivorbat/php7.4-composer:v2 AS builder
 
 COPY --chown=php:php src/composer.json src/composer.lock src/symfony.lock /app/src/
 
@@ -17,18 +17,26 @@ RUN mkdir -p /app \
        alpine-sdk \
        php7-redis \
        php7-opcache \
+       php7-gd \
        postgresql-dev \
+       libpng \
+       libpng-dev \
        autoconf \
     && pecl install -o -f redis \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable redis \
-    && docker-php-ext-install opcache pdo pdo_pgsql
+    && docker-php-ext-install opcache pdo pdo_pgsql gd
 
 WORKDIR /app/src
 
 COPY --chown=php:php --from=builder /app/src/vendor /app/src/vendor
 COPY --chown=php:php docker/php-fpm /
 COPY src/ /app/src/
+
+ENV APP_ENV prod
+ENV APP_DEBUG false
+
+ENTRYPOINT "docker-entrypoint"
 
 # Test with composer
 FROM runtime AS test

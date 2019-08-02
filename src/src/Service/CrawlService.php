@@ -69,7 +69,7 @@ class CrawlService
         $src = $element->getAttribute('src');
 
         if (!$this->containsBaseUrl($src)) {
-            $src = "$baseUrl/$src";
+            $src = "$baseUrl$src";
         }
 
         return new ScrapedImage(
