@@ -16,14 +16,14 @@ use Symfony\Component\Templating\EngineInterface;
 
 class SaveImages
 {
-    /** @var TwigRendererEngine $renderEngine */
-    protected $renderEngine;
+    /** @var EngineInterface $renderEngine */
+    protected EngineInterface $renderEngine;
     /** @var FormFactoryInterface $form */
-    protected $form;
+    protected FormFactoryInterface $form;
     /** @var SavedImageService $imageService */
-    protected $imageService;
+    protected SavedImageService $imageService;
     /** @var CrawlService $crawlService */
-    protected $crawlService;
+    protected CrawlService $crawlService;
 
     /**
      * Crawl constructor.
@@ -61,14 +61,16 @@ class SaveImages
             $scrapeRequest = $form->getData();
 
             $images = $this->crawlService->getImagesFromUrl($scrapeRequest->getUrl());
-            $this->imageService->saveImages($images);
+            foreach ($images as $image) {
+                $this->imageService->saveImage($image);
+            }
 
             return new RedirectResponse("/saved");
         }
 
         return new Response(
             $this->renderEngine->render(
-            'savedimage/save.html.twig', [ 'form' => $form->createView()]
+            '@App/savedimage/save.html.twig', [ 'form' => $form->createView()]
         ));
     }
 }

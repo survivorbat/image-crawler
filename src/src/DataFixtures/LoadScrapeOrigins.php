@@ -7,13 +7,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Faker\Generator;
 
 class LoadScrapeOrigins extends Fixture implements OrderedFixtureInterface
 {
     const AMOUNT = 10;
 
-    /** @var Factory $faker */
-    protected $faker;
+    /** @var Generator $faker */
+    protected Generator $faker;
 
     /**
      * LoadScrapeOrigins constructor.

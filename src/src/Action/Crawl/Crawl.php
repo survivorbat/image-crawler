@@ -13,12 +13,12 @@ use Symfony\Component\Templating\EngineInterface;
 
 class Crawl
 {
-    /** @var TwigRendererEngine $renderEngine */
-    protected $renderEngine;
+    /** @var EngineInterface $renderEngine */
+    protected EngineInterface $renderEngine;
     /** @var FormFactoryInterface $form */
-    protected $form;
+    protected FormFactoryInterface $form;
     /** @var CrawlService $crawlService */
-    protected $crawlService;
+    protected CrawlService $crawlService;
 
     /**
      * Crawl constructor.
@@ -51,13 +51,13 @@ class Crawl
             $scrapeRequest = $form->getData();
 
             $response = $this->renderEngine->render(
-                'crawl/crawl.html.twig', [
+                '@App/crawl/crawl.html.twig', [
                     'images' => $this->crawlService->getImagesFromUrl($scrapeRequest->getUrl()),
                     'form' => $form->createView()
                 ]);
         } else {
             $response = $this->renderEngine->render(
-                'crawl/crawl.html.twig', [ 'form' => $form->createView()]
+                '@App/crawl/crawl.html.twig', [ 'form' => $form->createView()]
             );
         }
 

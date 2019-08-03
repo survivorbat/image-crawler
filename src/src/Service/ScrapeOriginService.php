@@ -27,9 +27,8 @@ class ScrapeOriginService
      * @param string $url
      * @return ScrapeOrigin
      */
-    public function findOrCreateNew(string $url): ScrapeOrigin
+    public function findByUrlIfExists(string $url): ?ScrapeOrigin
     {
-        $scrapeOrigin = $this->scrapeOriginRepository->findOneBy(['url' => $url]);
-        return $scrapeOrigin ?? (new ScrapeOrigin())->setUrl($url);
+        return $this->scrapeOriginRepository->findOneBy(['url' => $url]);
     }
 }

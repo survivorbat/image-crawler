@@ -18,8 +18,12 @@
 }
 
 .content__p {
+    margin-top: 1.6em;
+    margin-bottom: 0.2em;
+}
+
+.content__p:first-of-type {
     margin-top: 0.2em;
-    margin-bottom: 0.1em;
 }
 
 .content__a {

@@ -1,12 +1,12 @@
-{% extends "@app/base.html.twig" %}
+{% extends "@App/base.html.twig" %}
 
 {% block content %}
     <main class="row lg">
         <div class="col md-8">
-            <h2 class="content__h2">Saving images</h2>
+            <h2 class="content__h2">Crawl a page and save its images</h2>
             {{ form_start(form) }}
                 {{ form_row(form.url) }}
-                <button class="form__button" type="submit">Save images</button>
+                <button class="form__button" type="submit">Save images to disk</button>
             {{ form_end(form) }}
         </div>
         <div class="col md-4">

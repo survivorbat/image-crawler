@@ -40,7 +40,7 @@ class SavedImages
         $images = $this->imageService->findAll();
 
         return new Response(
-            $this->renderEngine->render('savedimage/savedimages.html.twig', [ 'images' => $images ])
+            $this->renderEngine->render('@App/savedimage/savedimages.html.twig', [ 'images' => $images ])
         );
     }
 }

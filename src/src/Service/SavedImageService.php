@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\SavedImage;
+use App\Entity\ScrapeOrigin;
 use App\Model\ScrapedImage;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,42 +56,53 @@ class SavedImageService
     }
 
     /**
-     * @param ScrapedImage[]|array $images
+     * @param ScrapedImage $image
      * @return void
      */
-    public function saveImages(array $images): void
+    public function saveImage(ScrapedImage $image): void
     {
-        foreach ($images as $image) {
-            $subDir = md5($image->getScrapeUrl());
-            $path = $this->saveDir . DIRECTORY_SEPARATOR . $subDir;
-            $this->fs->mkdir($path);
-            $fileName = md5($image->getSrc()) . '.png';
-            $filePathname = $path . DIRECTORY_SEPARATOR . $fileName;
-            $publicPath = $this->publicDir . DIRECTORY_SEPARATOR . $subDir . DIRECTORY_SEPARATOR . $fileName;
+        $subDir = md5($image->getScrapeUrl());
+        $path = $this->saveDir . DIRECTORY_SEPARATOR . $subDir;
+        $this->fs->mkdir($path);
 
-            $savedImage = (new SavedImage())
-                ->setFilename($fileName)
-                ->setPath($path)
-                ->setPathname($filePathname)
-                ->setPublicPath($publicPath)
-                ->setScrapeOrigin($this->originService->findOrCreateNew($image->getScrapeUrl()));
+        $fileName = md5($image->getSrc()) . '.png';
+        $pathname = $path . DIRECTORY_SEPARATOR . $fileName;
+        $publicPath = $this->publicDir . DIRECTORY_SEPARATOR . $subDir . DIRECTORY_SEPARATOR . $fileName;
 
-            try {
-                $imageContents = file_get_contents($image->getSrc());
-                $imageFile = imagecreatefromstring($imageContents);
-            }
-            catch (\Exception $exception) {
-                continue;
-                // TODO: Handle this exception, display a small error or something of that sense
-            }
+        $scrapeOrigin = $this->originService->findByUrlIfExists($image->getScrapeUrl())
+            ?? (new ScrapeOrigin())->setUrl($image->getScrapeUrl());
 
-            imagesavealpha($imageFile, true);
-            imagealphablending($imageFile, false);
-            imagepng($imageFile, $filePathname);
+        $savedImage = (new SavedImage())
+            ->setFilename($fileName)
+            ->setPath($path)
+            ->setPathname($pathname)
+            ->setPublicPath($publicPath)
+            ->setScrapeOrigin($scrapeOrigin);
 
-            $this->em->persist($savedImage);
+        try {
+            $this->fetchAndSaveImage($image, $pathname);
+        }
+        catch (\ErrorException $exception) {
+            // TODO: Handle this
+            return;
         }
 
+        $this->em->persist($savedImage);
         $this->em->flush();
+    }
+
+    /**
+     * @param ScrapedImage $scrapedImage
+     * @param string $filePathname
+     */
+    protected function fetchAndSaveImage(ScrapedImage $scrapedImage, string $filePathname): void
+    {
+        $imageContents = file_get_contents($scrapedImage->getSrc());
+        $imageFile = imagecreatefromstring($imageContents);
+
+        imagesavealpha($imageFile, true);
+        imagealphablending($imageFile, false);
+
+        imagepng($imageFile, $filePathname);
     }
 }
