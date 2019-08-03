@@ -28,3 +28,4 @@ App\Entity\ScrapeOrigin:
       targetEntity: SavedImage
       mappedBy: scrapeOrigin
       inversedBy: savedImages
+      cascade: [remove, persist]

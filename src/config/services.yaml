@@ -1,6 +1,7 @@
 parameters:
     crawler.cache-ttl: 3600
-    save_dir: "%kernel.project_dir%/public/saves"
+    save_dir: "%kernel.project_dir%/public/save"
+    public_dir: "/save"
 
 services:
     _defaults:
@@ -24,6 +25,7 @@ services:
     App\Service\SavedImageService:
         arguments:
             $saveDir: "%save_dir%"
+            $publicDir: "%public_dir%"
 
     app.cache.adapter:
         class: Symfony\Component\Cache\Adapter\RedisAdapter

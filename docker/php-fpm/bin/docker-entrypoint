@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 su -s /bin/sh -c \
     "bin/console cache:clear --env=${APP_ENV} --no-debug \
     && bin/console --no-interaction doctrine:cache:clear-metadata \
@@ -9,5 +9,4 @@ su -s /bin/sh -c \
     && bin/console doctrine:migrations:migrate --no-interaction --no-debug \
     && bin/console cache:warmup --env=${APP_ENV} --no-debug" \
   php
-
 php-fpm

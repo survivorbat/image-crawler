@@ -63,7 +63,7 @@ class SaveImages
             $images = $this->crawlService->getImagesFromUrl($scrapeRequest->getUrl());
             $this->imageService->saveImages($images);
 
-            return new RedirectResponse("/");
+            return new RedirectResponse("/saved");
         }
 
         return new Response(

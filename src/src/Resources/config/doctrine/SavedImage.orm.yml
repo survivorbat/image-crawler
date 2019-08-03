@@ -15,10 +15,6 @@ App\Entity\SavedImage:
       type: string
       options:
         default: ''
-    baseName:
-      type: string
-      options:
-        default: ''
     publicPath:
       type: string
       options:
@@ -44,3 +40,4 @@ App\Entity\SavedImage:
       targetEntity: ScrapeOrigin
       mappedBy: savedImages
       inversedBy: savedImages
+      cascade: [persist]

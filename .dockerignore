@@ -1,5 +1,6 @@
 src/var
 src/vendor
+src/public/save
 src/bin/composer
 .dockerignore
 .gitignore

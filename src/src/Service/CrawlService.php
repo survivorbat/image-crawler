@@ -10,11 +10,11 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
 class CrawlService
 {
     /** @var AdapterInterface $cache */
-    protected $cache;
+    protected AdapterInterface $cache;
     /** @var Client $client */
-    protected $client;
+    protected Client $client;
     /** @var int $cacheTTL */
-    protected $cacheTTL;
+    protected int $cacheTTL;
 
     /**
      * CrawlService constructor.

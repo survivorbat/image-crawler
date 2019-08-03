@@ -11,12 +11,12 @@ use Symfony\Component\Templating\EngineInterface;
 
 class SavedImages
 {
-    /** @var TwigRendererEngine $renderEngine */
-    protected $renderEngine;
+    /** @var EngineInterface $renderEngine */
+    protected EngineInterface $renderEngine;
     /** @var FormFactoryInterface $form */
-    protected $form;
+    protected FormFactoryInterface $form;
     /** @var SavedImageService $imageService */
-    protected $imageService;
+    protected SavedImageService $imageService;
 
     /**
      * Crawl constructor.
@@ -37,6 +37,10 @@ class SavedImages
      */
     public function __invoke(Request $request): Response
     {
+        $images = $this->imageService->findAll();
 
+        return new Response(
+            $this->renderEngine->render('savedimage/savedimages.html.twig', [ 'images' => $images ])
+        );
     }
 }

@@ -1,10 +1,13 @@
-FROM survivorbat/php7.4-composer:v2 AS builder
-
-COPY --chown=php:php src/composer.json src/composer.lock src/symfony.lock /app/src/
-
-USER php
-
-RUN composer install -d /app/src --optimize-autoloader --ignore-platform-reqs --no-interaction --no-suggest --no-scripts
+FROM php:7.4.0alpha3-fpm-alpine as builder
+COPY src/composer.json src/composer.lock src/symfony.lock /app/src/
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN addgroup -g 1000 php \
+    && adduser -u 1000 -s /bin/sh -S php \
+    && mkdir -p /app \
+    && chown -R php:php /app \
+    && apk add --update --no-cache --virtual \
+       git \
+    && composer install -d /app/src --optimize-autoloader --no-interaction --no-suggest --no-scripts
 
 # Runtime
 FROM php:7.4.0alpha3-fpm-alpine AS runtime
@@ -21,6 +24,7 @@ RUN mkdir -p /app \
        postgresql-dev \
        libpng \
        libpng-dev \
+       libjpeg \
        autoconf \
     && pecl install -o -f redis \
     && rm -rf /tmp/pear \
@@ -40,9 +44,7 @@ ENTRYPOINT "docker-entrypoint"
 
 # Test with composer
 FROM runtime AS test
-
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-
 RUN /app/src/bin/phpunit
 
 # Final image

@@ -19,9 +19,6 @@ services:
       - nginx
       - cache
       - postgres
-    depends_on:
-      - postgres
-      - redis
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
@@ -43,7 +40,7 @@ services:
     expose:
       - 5432
     volumes:
-      - db-data:/var/lib/pgsql/data
+      - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: developer
       # TODO: Add 'production' password
@@ -55,8 +52,6 @@ services:
     ports:
       - 80:8080
       - 443:8443
-    depends_on:
-      - php-fpm
     environment:
       fastcgi_cache_valid: 60m
       server_name: localhost

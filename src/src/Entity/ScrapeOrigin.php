@@ -37,7 +37,7 @@ class ScrapeOrigin
      * @param SavedImage[]|ArrayCollection $savedImages
      * @return ScrapeOrigin
      */
-    public function setSavedImages($savedImages)
+    public function setSavedImages(ArrayCollection $savedImages)
     {
         $this->savedImages = $savedImages;
         return $this;

@@ -4,33 +4,46 @@ namespace App\Service;
 
 use App\Entity\SavedImage;
 use App\Model\ScrapedImage;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Filesystem\Filesystem;
 
 class SavedImageService
 {
+    /** @var ScrapeOriginService $originService */
+    protected ScrapeOriginService $originService;
     /** @var Filesystem $fs */
-    protected $fs;
+    protected Filesystem $fs;
     /** @var EntityManagerInterface $em */
-    protected $em;
-    /** @var EntityRepository $repository */
-    protected $repository;
+    protected EntityManagerInterface $em;
+    /** @var ObjectRepository $repository */
+    protected ObjectRepository $repository;
     /** @var string $saveDir */
     protected string $saveDir;
+    /** @var string $publicDir */
+    protected string $publicDir;
 
     /**
      * SaveService constructor.
+     * @param ScrapeOriginService $originService
      * @param Filesystem $fs
      * @param EntityManagerInterface $em
      * @param string $saveDir
+     * @param string $publicDir
      */
-    public function __construct(Filesystem $fs, EntityManagerInterface $em, string $saveDir)
-    {
+    public function __construct(
+        ScrapeOriginService $originService,
+        Filesystem $fs,
+        EntityManagerInterface $em,
+        string $saveDir,
+        string $publicDir
+    ) {
+        $this->originService = $originService;
         $this->fs = $fs;
         $this->em = $em;
         $this->repository = $em->getRepository(SavedImage::class);
         $this->saveDir = $saveDir;
+        $this->publicDir = $publicDir;
     }
 
     /**
@@ -42,27 +55,38 @@ class SavedImageService
     }
 
     /**
-     * TODO: Add public path and scrape origin
-     *
      * @param ScrapedImage[]|array $images
      * @return void
      */
     public function saveImages(array $images): void
     {
         foreach ($images as $image) {
-            $path = $this->saveDir . DIRECTORY_SEPARATOR . md5($image->getScrapeUrl());
+            $subDir = md5($image->getScrapeUrl());
+            $path = $this->saveDir . DIRECTORY_SEPARATOR . $subDir;
             $this->fs->mkdir($path);
             $fileName = md5($image->getSrc()) . '.png';
-            $fileName = $path . DIRECTORY_SEPARATOR . $fileName;
+            $filePathname = $path . DIRECTORY_SEPARATOR . $fileName;
+            $publicPath = $this->publicDir . DIRECTORY_SEPARATOR . $subDir . DIRECTORY_SEPARATOR . $fileName;
 
             $savedImage = (new SavedImage())
                 ->setFilename($fileName)
                 ->setPath($path)
-                ->setPathname($fileName);
+                ->setPathname($filePathname)
+                ->setPublicPath($publicPath)
+                ->setScrapeOrigin($this->originService->findOrCreateNew($image->getScrapeUrl()));
 
-            $imageContents = file_get_contents($image->getSrc());
-            $imageFile = imagecreatefromstring($imageContents);
-            imagepng($imageFile, $fileName);
+            try {
+                $imageContents = file_get_contents($image->getSrc());
+                $imageFile = imagecreatefromstring($imageContents);
+            }
+            catch (\Exception $exception) {
+                continue;
+                // TODO: Handle this exception, display a small error or something of that sense
+            }
+
+            imagesavealpha($imageFile, true);
+            imagealphablending($imageFile, false);
+            imagepng($imageFile, $filePathname);
 
             $this->em->persist($savedImage);
         }

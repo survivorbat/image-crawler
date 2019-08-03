@@ -16,12 +16,10 @@ class SavedImage
     protected string $path = '';
     /** @var string $pathname */
     protected string $pathname = '';
-    /** @var string $baseName */
-    protected string $baseName = '';
     /** @var string $publicPath */
     protected string $publicPath = '';
-    /** @var ScrapedImage $scrapeOrigin */
-    protected ScrapedImage $scrapeOrigin;
+    /** @var ScrapeOrigin $scrapeOrigin */
+    protected ScrapeOrigin $scrapeOrigin;
 
     /**
      * @return string
@@ -68,6 +66,16 @@ class SavedImage
     }
 
     /**
+     * @param string $publicPath
+     * @return SavedImage
+     */
+    public function setPublicPath(string $publicPath): SavedImage
+    {
+        $this->publicPath = $publicPath;
+        return $this;
+    }
+
+    /**
      * @param string $path
      * @return SavedImage
      */
@@ -78,18 +86,18 @@ class SavedImage
     }
 
     /**
-     * @return ScrapedImage
+     * @return ScrapeOrigin
      */
-    public function getScrapeOrigin(): ?ScrapedImage
+    public function getScrapeOrigin(): ?ScrapeOrigin
     {
         return $this->scrapeOrigin;
     }
 
     /**
-     * @param ScrapedImage $scrapeOrigin
+     * @param ScrapeOrigin $scrapeOrigin
      * @return SavedImage
      */
-    public function setScrapeOrigin(ScrapedImage $scrapeOrigin): SavedImage
+    public function setScrapeOrigin(ScrapeOrigin $scrapeOrigin): SavedImage
     {
         $this->scrapeOrigin = $scrapeOrigin;
         return $this;

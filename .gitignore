@@ -4,3 +4,4 @@
 /src/var/
 /src/vendor/
 /src/bin/.phpunit
+src/public/save

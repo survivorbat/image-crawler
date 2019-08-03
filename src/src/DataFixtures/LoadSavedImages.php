@@ -13,7 +13,7 @@ class LoadSavedImages extends Fixture implements OrderedFixtureInterface
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
 
     }
