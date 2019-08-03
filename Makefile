@@ -17,6 +17,9 @@ up: ## Start containers in development mode
 down: ## Stop containers
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler down
 
+test: ## Run phpunit tests
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm bin/phpunit
+
 php.run: ## Run a command in the php container, requires a 'cmd' argument
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm ${cmd}
 

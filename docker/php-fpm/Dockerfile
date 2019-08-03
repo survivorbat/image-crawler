@@ -24,11 +24,21 @@ RUN mkdir -p /app \
        postgresql-dev \
        libpng \
        libpng-dev \
-       libjpeg \
        autoconf \
+       freetype \
+       libjpeg-turbo \
+       freetype-dev \
+       jpeg-dev \
+       libjpeg \
+       libjpeg-turbo-dev \
     && pecl install -o -f redis \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable redis \
+    && docker-php-ext-configure gd \
+                --with-freetype-dir=/usr/lib/ \
+                --with-png-dir=/usr/lib/ \
+                --with-jpeg-dir=/usr/lib/ \
+                --with-gd \
     && docker-php-ext-install opcache pdo pdo_pgsql gd
 
 WORKDIR /app/src
@@ -45,7 +55,7 @@ ENTRYPOINT "docker-entrypoint"
 # Test with composer
 FROM runtime AS test
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-RUN /app/src/bin/phpunit
+RUN /app/src/bin/phpunit --testsuite=unit,integration
 
 # Final image
 FROM runtime

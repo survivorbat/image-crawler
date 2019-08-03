@@ -34,6 +34,14 @@ class ScrapeOrigin
     }
 
     /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
      * @param SavedImage[]|ArrayCollection $savedImages
      * @return ScrapeOrigin
      */
@@ -41,5 +49,13 @@ class ScrapeOrigin
     {
         $this->savedImages = $savedImages;
         return $this;
+    }
+
+    /**
+     * @return SavedImage[]|ArrayCollection
+     */
+    public function getSavedImages()
+    {
+        return $this->savedImages;
     }
 }
