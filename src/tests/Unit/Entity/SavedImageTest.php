@@ -2,22 +2,17 @@
 
 namespace App\Tests\Unit\Entity;
 
+use App\Entity\SavedImage;
 use PHPUnit\Framework\TestCase;
 
 /**
- * TODO
- *
  * @coversDefaultClass \App\Entity\SavedImage
- * @covers ::_construct
+ * @covers \App\Entity\SavedImage
  */
 class SavedImageTest extends TestCase
 {
-    /**
-     * TODO: Remove
-     * @covers ::setId
-     */
-    public function testEmpty(): void
-    {
-        $this->assertTrue(true);
-    }
+    use EntityGetSetTestTrait;
+
+    /** @var string $class */
+    protected string $class = SavedImage::class;
 }

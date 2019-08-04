@@ -9,34 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \App\Entity\ScrapeOrigin
- * @covers ::_construct
+ * @covers \App\Entity\ScrapeOrigin
  */
 class ScrapeOriginTest extends TestCase
 {
-    /**
-     * @covers ::setUrl
-     * @covers ::getUrl
-     */
-    public function testIfUrlIsSetCorrectly(): void
-    {
-        $scrapeOrigin = new ScrapeOrigin();
-        $scrapeOrigin->setUrl("https://example.com");
-        $this->assertEquals("https://example.com", $scrapeOrigin->getUrl());
-    }
+    use EntityGetSetTestTrait;
 
-    /**
-     * @covers ::setSavedImages
-     * @covers ::getSavedImages
-     */
-    public function testIfSavedImagesAreSetCorrectly(): void
-    {
-        $scrapeOrigin = new ScrapeOrigin();
-        $scrapeOrigin->setSavedImages(
-            new ArrayCollection([new SavedImage(), new SavedImage()])
-        );
-        $this->assertEquals(
-            new ArrayCollection([new SavedImage(), new SavedImage()]),
-            $scrapeOrigin->getSavedImages()
-        );
-    }
+    /** @var string $class */
+    protected string $class = ScrapeOrigin::class;
 }
