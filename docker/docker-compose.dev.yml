@@ -10,6 +10,7 @@ services:
       dockerfile: docker/php-fpm/Dockerfile
     volumes:
       - ../src:/app/src:cached
+      - ./php-fpm/bin/docker-entrypoint:/bin/docker-entrypoint:cached
     environment:
       APP_ENV: dev
       APP_DEBUG: "true"

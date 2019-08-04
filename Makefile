@@ -20,6 +20,18 @@ down: ## Stop containers
 test: ## Run phpunit tests
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm bin/phpunit
 
+test.unit: ## Run phpunit unit tests
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm bin/phpunit --testsuite=unit
+
+test.integration: ## Run phpunit integration tests
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm bin/phpunit --testsuite=integration
+
+test.functional: ## Run phpunit functional tests, please beware that this requires the application to be running
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm bin/phpunit --testsuite=functional
+
+test.coverage: ## Run phpunit tests and generate coverage
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm bin/phpunit --coverage-html=/app/src/public/coverage
+
 php.run: ## Run a command in the php container, requires a 'cmd' argument
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -p image-crawler exec -u php php-fpm ${cmd}
 

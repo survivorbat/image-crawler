@@ -11,10 +11,11 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\DomCrawler\AbstractUriElement;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
+ * TODO: Add more scenario's
+ *
  * @coversDefaultClass \App\Service\CrawlService
  * @covers ::_construct
  */
@@ -54,12 +55,12 @@ class CrawlServiceTest extends TestCase
         $domElement = $this->generateTargetElement(
             [
                 [
-                    'href' => "$url/images/image.png",
+                    'src' => "$url/images/image.png",
                     'title' => '',
                     'alt' => 'Header image'
                 ],
                 [
-                    'href' => "$url/img/test.jpeg",
+                    'src' => "$url/img/test.jpeg",
                     'title' => 'Footer image',
                     'alt' => 'Footer image'
                 ]
@@ -115,6 +116,39 @@ class CrawlServiceTest extends TestCase
     }
 
     /**
+     * @covers ::getImagesFromUrl
+     * @throws InvalidArgumentException
+     */
+    public function testIfCacheIsUsed(): void
+    {
+        $url = 'https://example.com';
+        $service = new CrawlService($this->cacheAdapter, $this->client, $this->cacheTTL);
+
+        $this->cacheAdapter->expects($this->once())
+            ->method('getItem')
+            ->with(md5($url))
+            ->willReturn($this->cacheItem);
+
+        $this->cacheItem->expects($this->once())
+            ->method('isHit')
+            ->willReturn(true);
+
+        $this->cacheItem->expects($this->once())
+            ->method('get')
+            ->willReturn([
+                new ScrapedImage("$url/image.png", 'Alternate', 'Title', $url)
+            ]);
+
+        $images = $service->getImagesFromUrl($url);
+
+        $this->assertCount(1, $images);
+        $this->assertEquals("$url/image.png", $images[0]->getSrc());
+        $this->assertEquals( 'Alternate', $images[0]->getAlt());
+        $this->assertEquals('Title', $images[0]->getTitle());
+        $this->assertEquals($url, $images[0]->getScrapeUrl());
+    }
+
+    /**
      * @param array $imageValues
      * @return MockObject
      */
@@ -126,7 +160,7 @@ class CrawlServiceTest extends TestCase
 
         foreach ($imageValues as $imageValue) {
             $imageElement = $this->document->createElement('img');
-            $imageElement->setAttribute('href', $imageValue['href'] ?? 'https://example.com/image.png');
+            $imageElement->setAttribute('src', $imageValue['src'] ?? 'https://example.com/image.png');
             $imageElement->setAttribute('title', $imageValue['title'] ?? 'Example image');
             $imageElement->setAttribute('alt', $imageValue['alt'] ?? 'Alt text for image');
             $images[] = ($imageElement);
