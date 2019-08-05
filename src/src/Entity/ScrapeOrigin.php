@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 class ScrapeOrigin
@@ -12,8 +13,8 @@ class ScrapeOrigin
 
     /** @var string $url */
     protected string $url = '';
-    /** @var ArrayCollection|SavedImage[] $savedImages */
-    protected $savedImages;
+    /** @var Collection|SavedImage[] $savedImages */
+    protected Collection $savedImages;
 
     /**
      * ScrapeOrigin constructor.
@@ -54,7 +55,7 @@ class ScrapeOrigin
     /**
      * @return SavedImage[]|ArrayCollection
      */
-    public function getSavedImages()
+    public function getSavedImages(): Collection
     {
         return $this->savedImages;
     }

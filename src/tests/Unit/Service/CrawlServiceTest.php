@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Service;
 
 use App\Model\ScrapedImage;
 use App\Service\CrawlService;
+use App\Tests\Resources\ImageCrawlTrait;
 use Cache\Adapter\Common\CacheItem;
 use DOMDocument;
 use Goutte\Client;
@@ -21,14 +22,14 @@ use Symfony\Component\DomCrawler\Crawler;
  */
 class CrawlServiceTest extends TestCase
 {
+    use ImageCrawlTrait;
+
     /** @var MockObject|AdapterInterface $cacheAdapter */
     protected MockObject $cacheAdapter;
     /** @var MockObject|Client $client */
     protected MockObject $client;
     /** @var MockObject|CacheItem $cacheItem */
     protected MockObject $cacheItem;
-    /** @var DOMDocument $document */
-    protected DOMDocument $document;
     /** @var int $cacheTTL */
     protected int $cacheTTL;
 
@@ -40,7 +41,6 @@ class CrawlServiceTest extends TestCase
         $this->cacheAdapter = $this->createMock(AdapterInterface::class);
         $this->client = $this->createMock(Client::class);
         $this->cacheItem = $this->createMock(CacheItem::class);
-        $this->document = new DOMDocument();
         $this->cacheTTL = 20;
     }
 
@@ -113,63 +113,5 @@ class CrawlServiceTest extends TestCase
         $this->assertEquals('Footer image', $image2->getAlt());
         $this->assertEquals("$url/img/test.jpeg", $image2->getSrc());
         $this->assertEquals($url, $image2->getScrapeUrl());
-    }
-
-    /**
-     * @covers ::getImagesFromUrl
-     * @throws InvalidArgumentException
-     */
-    public function testIfCacheIsUsed(): void
-    {
-        $url = 'https://example.com';
-        $service = new CrawlService($this->cacheAdapter, $this->client, $this->cacheTTL);
-
-        $this->cacheAdapter->expects($this->once())
-            ->method('getItem')
-            ->with(md5($url))
-            ->willReturn($this->cacheItem);
-
-        $this->cacheItem->expects($this->once())
-            ->method('isHit')
-            ->willReturn(true);
-
-        $this->cacheItem->expects($this->once())
-            ->method('get')
-            ->willReturn([
-                new ScrapedImage("$url/image.png", 'Alternate', 'Title', $url)
-            ]);
-
-        $images = $service->getImagesFromUrl($url);
-
-        $this->assertCount(1, $images);
-        $this->assertEquals("$url/image.png", $images[0]->getSrc());
-        $this->assertEquals( 'Alternate', $images[0]->getAlt());
-        $this->assertEquals('Title', $images[0]->getTitle());
-        $this->assertEquals($url, $images[0]->getScrapeUrl());
-    }
-
-    /**
-     * @param array $imageValues
-     * @return MockObject
-     */
-    protected function generateTargetElement($imageValues = []): MockObject
-    {
-        $element = $this->createMock(Crawler::class);
-
-        $images = [];
-
-        foreach ($imageValues as $imageValue) {
-            $imageElement = $this->document->createElement('img');
-            $imageElement->setAttribute('src', $imageValue['src'] ?? 'https://example.com/image.png');
-            $imageElement->setAttribute('title', $imageValue['title'] ?? 'Example image');
-            $imageElement->setAttribute('alt', $imageValue['alt'] ?? 'Alt text for image');
-            $images[] = ($imageElement);
-        }
-
-        $element->expects($this->any())
-            ->method('filter')
-            ->willReturn($images);
-
-        return $element;
     }
 }
