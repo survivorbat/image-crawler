@@ -1,5 +1,6 @@
 # Image Crawler
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/43b260c42ec2432bae3c1c9329550b12)](https://app.codacy.com/app/survivorbat/image-crawler?utm_source=github.com&utm_medium=referral&utm_content=survivorbat/image-crawler&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/survivorbat/image-crawler.svg?branch=master)](https://travis-ci.com/survivorbat/image-crawler)
 
 ![Spider image](src/public/img/spider.jpg "Spider image")
