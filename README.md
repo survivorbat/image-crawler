@@ -36,13 +36,12 @@ Setting up the application is as easy as:
 - ~~Perhaps put the browser in a different container~~
 - ~~Ensure chromium does not crash in the background (or perhaps switch to simpler crawler)~~
 - ~~Add the ability to save images~~
+- ~~Add tests~~
 - Allow mixed content (http/https)
 - Add more security
 - Remove empty images from results
 - Add password to Redis
 - Add phpstan
-- Add tests
-- Add php-cs-fixer
 - Add in some error pages for better exception handling
 
 ## Known quirks
